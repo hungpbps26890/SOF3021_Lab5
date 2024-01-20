@@ -1,0 +1,134 @@
+package com.poly.controller;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.poly.entity.Category;
+import com.poly.entity.Product;
+import com.poly.service.CategoryService;
+import com.poly.service.ProductService;
+import com.poly.utils.UploadService;
+
+import jakarta.validation.Valid;
+
+@Controller
+public class ProductManagementController {
+
+	@Autowired
+	ProductService productService;
+
+	@Autowired
+	CategoryService categoryService;
+
+	@Autowired
+	UploadService uploadService;
+
+	@GetMapping("admin/product")
+	public String getProductManagement(Model model) {
+		model.addAttribute("product", new Product());
+
+		return "product-management";
+	}
+
+	@PostMapping("admin/product")
+	public String insert(@Valid @ModelAttribute("product") Product product, BindingResult result, Model model,
+			@RequestPart("photo") MultipartFile multipartFile) throws IOException {
+
+		if (result.hasErrors() || multipartFile.isEmpty()) {
+			model.addAttribute("errorFile", "Please choose image");
+			return "product-management";
+		} else {
+
+			String fileName = multipartFile.getOriginalFilename();
+			uploadService.save(multipartFile, "/images/");
+			product.setImage(fileName);
+			
+			Category category = categoryService.findById(product.getCategory().getId()).get();
+			product.setCategory(category);
+			
+			productService.save(product);
+			
+			model.addAttribute("message", "Save product successfully");
+		}
+		
+
+		model.addAttribute("product", new Product());
+		model.addAttribute("products", productService.findAll());
+		
+		return "product-management";
+	}
+
+	@GetMapping("admin/product/{id}")
+	public String edit(@PathVariable("id") Integer id, Model model) {
+		Product product = productService.findById(id).get();
+		model.addAttribute("product", product);
+		model.addAttribute("products", productService.findAll());
+		return "product-management";
+	}
+	
+	@PostMapping("admin/product/update")
+	public String update(@Valid @ModelAttribute("product") Product product, BindingResult result, Model model,
+			@RequestPart("photo") MultipartFile multipartFile) {
+		if (result.hasErrors() || multipartFile.isEmpty()) {
+			model.addAttribute("errorFile", "Please choose image");
+			return "product-management";
+		} else {
+
+			String fileName = multipartFile.getOriginalFilename();
+			uploadService.save(multipartFile, "/images/");
+			product.setImage(fileName);
+			
+			Category category = categoryService.findById(product.getCategory().getId()).get();
+			product.setCategory(category);
+			
+			productService.save(product);
+			
+			model.addAttribute("message", "Update product successfully");
+		}
+		
+		model.addAttribute("product", new Product());
+		model.addAttribute("products", productService.findAll());
+		
+		return "product-management";
+	}
+	
+	@GetMapping(value = "admin/product", params = "btnDel")
+	public String delete(@RequestParam("id") Integer id, Model model) {
+		productService.deleteById(id);
+
+		return "redirect:/admin/product";
+	}
+
+	@ModelAttribute("statuses")
+	public Map<Boolean, String> getStatuses() {
+		Map<Boolean, String> statusesMap = new HashMap<Boolean, String>();
+		statusesMap.put(true, "Active");
+		statusesMap.put(false, "Inactive");
+		return statusesMap;
+	}
+
+	@ModelAttribute("categories")
+	public List<Category> getCategories() {
+		return categoryService.findAll();
+	}
+
+	@ModelAttribute("products")
+	public List<Product> getProducts() {
+		return productService.findAll();
+	}
+
+}
