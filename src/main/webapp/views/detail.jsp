@@ -42,18 +42,15 @@
 					        <div class="card-body">
 					          <div class="row">
 					          	<div class="col-md-8">
-					          		<img src="/images/${product.photo}" class="img-fluid mb-3 rounded" />
+					          		<img src="/images/${product.image}" class="img-fluid mb-3 rounded" />
 					          	</div>
 					          	<div class="col-md-4">
 					          		<ul class="list-group mb-3">
 							            <li class="list-group-item">
 							            	<h3 class="text-danger"><i class="fa-solid fa-dollar-sign"></i> ${product.price }</h3>
 							            </li>
-							            <li class="list-group-item"><strong>Maker: </strong>
-							            	<span>${product.maker.name }</span>
-							            </li>
-							            <li class="list-group-item"><strong>Status: </strong>
-							            	<span>${statuses.get(product.status)}</span>
+							            <li class="list-group-item"><strong>Category: </strong>
+							            	<span>${product.category.name }</span>
 							            </li>
 							          </ul>
 							          <a class="btn btn-primary" href="/cart/add/${product.id}">Add to cart</a>

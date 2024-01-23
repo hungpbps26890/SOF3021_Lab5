@@ -43,8 +43,8 @@
 								<form action="${url}/profile" method="post">
 									<div class="mb-3">
 										<label for="username" class="form-label">Username</label> <input
-											type="text" class="form-control" id="username" name="id" 
-											value="${currentUser.id}"
+											type="text" class="form-control" id="username" name="username" 
+											value="${currentUser.username}"
 											/>
 									</div>
 									

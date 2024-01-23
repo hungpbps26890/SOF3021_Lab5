@@ -53,7 +53,7 @@ public class ProductManagementController {
 	@GetMapping("admin/product/list/sort")
 	public String sort(@RequestParam("field") Optional<String> field, @RequestParam("page") Optional<Integer> page, Model model) {
 		Sort sort = Sort.by(Direction.ASC, field.orElse("id"));
-		Pageable pageable = PageRequest.of(page.orElse(0), 2, sort);
+		Pageable pageable = PageRequest.of(page.orElse(0), 4, sort);
 
 		Page<Product> products = productDAO.findAll(pageable);
 
@@ -65,7 +65,7 @@ public class ProductManagementController {
 
 	@GetMapping("admin/product/list")
 	public String paginate(Model model, @RequestParam("page") Optional<Integer> page) {
-		Pageable pageable = PageRequest.of(page.orElse(0), 2);
+		Pageable pageable = PageRequest.of(page.orElse(0), 4);
 
 		Page<Product> products = productDAO.findAll(pageable);
 
@@ -106,6 +106,13 @@ public class ProductManagementController {
 
 		return "product-management";
 	}
+	
+	@PostMapping("admin/product/delete/{id}")
+	public String delete(@PathVariable("id") Integer id, Model model) {
+		productDAO.deleteById(id);
+
+		return "redirect:/admin/product";
+	}
 
 	@PostMapping("admin/product/update")
 	public String update(@Valid @ModelAttribute("product") Product product, BindingResult result, Model model,
@@ -131,10 +138,10 @@ public class ProductManagementController {
 	}
 
 	@GetMapping(value = "admin/product", params = "btnDel")
-	public String delete(@RequestParam("id") Integer id, Model model) {
+	public String deleteInline(@RequestParam("id") Integer id, Model model) {
 		productDAO.deleteById(id);
 
-		return "redirect:/admin/product";
+		return "redirect:/admin/product/list";
 	}
 
 	@ModelAttribute("statuses")

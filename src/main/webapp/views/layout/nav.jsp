@@ -18,7 +18,7 @@
 				</a>
 				</li>
 				<c:choose>
-					<c:when test="${sessionScope.currentUser.role == true}">
+					<c:when test="${sessionScope.currentUser.admin == true}">
 						<li class="nav-item"><a class="nav-link" href="<c:url value='/admin/product'/>"><i
 						class="fa-solid fa-list"></i> Product Management</a></li>
 					</c:when>

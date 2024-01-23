@@ -43,7 +43,7 @@
 								<form action="${url}/login" method="post">
 									<div class="mb-3">
 										<label for="username" class="form-label">Username</label> <input
-											type="text" class="form-control" id="username" name="id" value="${id}"
+											type="text" class="form-control" id="username" name="username" value="${username}"
 											/>
 									</div>
 									<div class="mb-3">
@@ -52,7 +52,7 @@
 											class="form-control" id="password" value="${password}"/>
 									</div>
 									<c:choose>
-										<c:when test="${not empty id}">
+										<c:when test="${not empty username}">
 											<div class="form-check">
 											  <input class="form-check-input" type="checkbox" value="true" id="remember" name="remember" checked>
 											  <label class="form-check-label" for="remember">

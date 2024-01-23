@@ -116,10 +116,11 @@
 					            <p class="badge text-bg-danger">${errorMessage}</p>
 					
 					            <div class="mb-3">
+					              <a class="btn btn-success" href="/admin/product/list">View List</a>
 					              <button class="btn btn-primary">Save</button>
 					              <button class="btn btn-warning" formaction="/admin/product/update">Update</button>
+					              <button class="btn btn-danger" formaction="/admin/product/delete/${product.id}">Delete</button>
 					              <a class="btn btn-secondary" href="/admin/product">Cancel</a>
-					              <a class="btn btn-success" href="/admin/product/list">View List</a>
 					            </div>
 					          </form:form>
 					         
