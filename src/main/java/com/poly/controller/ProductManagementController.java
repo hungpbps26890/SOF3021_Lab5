@@ -4,8 +4,14 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,10 +23,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.poly.dao.CategoryDAO;
+import com.poly.dao.ProductDAO;
 import com.poly.entity.Category;
 import com.poly.entity.Product;
-import com.poly.service.CategoryService;
-import com.poly.service.ProductService;
 import com.poly.utils.UploadService;
 
 import jakarta.validation.Valid;
@@ -29,10 +35,10 @@ import jakarta.validation.Valid;
 public class ProductManagementController {
 
 	@Autowired
-	ProductService productService;
+	ProductDAO productDAO;
 
 	@Autowired
-	CategoryService categoryService;
+	CategoryDAO categoryDAO;
 
 	@Autowired
 	UploadService uploadService;
@@ -42,6 +48,31 @@ public class ProductManagementController {
 		model.addAttribute("product", new Product());
 
 		return "product-management";
+	}
+
+	@GetMapping("admin/product/list/sort")
+	public String sort(@RequestParam("field") Optional<String> field, @RequestParam("page") Optional<Integer> page, Model model) {
+		Sort sort = Sort.by(Direction.ASC, field.orElse("id"));
+		Pageable pageable = PageRequest.of(page.orElse(0), 2, sort);
+
+		Page<Product> products = productDAO.findAll(pageable);
+
+		model.addAttribute("products", products);
+
+
+		return "product-management-list";
+	}
+
+	@GetMapping("admin/product/list")
+	public String paginate(Model model, @RequestParam("page") Optional<Integer> page) {
+		Pageable pageable = PageRequest.of(page.orElse(0), 2);
+
+		Page<Product> products = productDAO.findAll(pageable);
+
+		model.addAttribute("products", products);
+
+
+		return "product-management-list";
 	}
 
 	@PostMapping("admin/product")
@@ -56,30 +87,26 @@ public class ProductManagementController {
 			String fileName = multipartFile.getOriginalFilename();
 			uploadService.save(multipartFile, "/images/");
 			product.setImage(fileName);
-			
-			Category category = categoryService.findById(product.getCategory().getId()).get();
+
+			Category category = categoryDAO.findById(product.getCategory().getId()).get();
 			product.setCategory(category);
-			
-			productService.save(product);
-			
+
+			productDAO.save(product);
+
 			model.addAttribute("message", "Save product successfully");
 		}
-		
 
-		model.addAttribute("product", new Product());
-		model.addAttribute("products", productService.findAll());
-		
-		return "product-management";
+		return "redirect:/admin/product";
 	}
 
 	@GetMapping("admin/product/{id}")
 	public String edit(@PathVariable("id") Integer id, Model model) {
-		Product product = productService.findById(id).get();
+		Product product = productDAO.findById(id).get();
 		model.addAttribute("product", product);
-		model.addAttribute("products", productService.findAll());
+
 		return "product-management";
 	}
-	
+
 	@PostMapping("admin/product/update")
 	public String update(@Valid @ModelAttribute("product") Product product, BindingResult result, Model model,
 			@RequestPart("photo") MultipartFile multipartFile) {
@@ -91,24 +118,21 @@ public class ProductManagementController {
 			String fileName = multipartFile.getOriginalFilename();
 			uploadService.save(multipartFile, "/images/");
 			product.setImage(fileName);
-			
-			Category category = categoryService.findById(product.getCategory().getId()).get();
+
+			Category category = categoryDAO.findById(product.getCategory().getId()).get();
 			product.setCategory(category);
-			
-			productService.save(product);
-			
+
+			productDAO.save(product);
+
 			model.addAttribute("message", "Update product successfully");
 		}
-		
-		model.addAttribute("product", new Product());
-		model.addAttribute("products", productService.findAll());
-		
-		return "product-management";
+
+		return "redirect:/admin/product";
 	}
-	
+
 	@GetMapping(value = "admin/product", params = "btnDel")
 	public String delete(@RequestParam("id") Integer id, Model model) {
-		productService.deleteById(id);
+		productDAO.deleteById(id);
 
 		return "redirect:/admin/product";
 	}
@@ -123,12 +147,7 @@ public class ProductManagementController {
 
 	@ModelAttribute("categories")
 	public List<Category> getCategories() {
-		return categoryService.findAll();
+		List<Category> categories = categoryDAO.findAll();
+		return categories;
 	}
-
-	@ModelAttribute("products")
-	public List<Product> getProducts() {
-		return productService.findAll();
-	}
-
 }

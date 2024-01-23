@@ -18,15 +18,17 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @SuppressWarnings("serial")
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 @Entity
-@Table(name = "Orders")
+@Table(name = "orders")
 public class Order implements Serializable {
 
 	@Id
@@ -34,7 +36,7 @@ public class Order implements Serializable {
 	private Long id;
 	
 	@Temporal(TemporalType.DATE)
-	@Column(name = "Createdate")
+	@Column(name = "create_date")
 	private Date createDate = new Date();
 	
 	@Column(columnDefinition = "nvarchar(MAX)")

@@ -11,24 +11,26 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @SuppressWarnings("serial")
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 @Entity
-@Table(name = "Accounts")
+@Table(name = "accounts")
 public class Account implements Serializable {
 	@Id
 	@Column(columnDefinition = "varchar(50)")
 	private String username;
 	
-	@Column(columnDefinition = "nvarchar(50)")
+	@Column(columnDefinition = "nvarchar(50)", name = "first_name")
 	private String firstName;
 	
-	@Column(columnDefinition = "nvarchar(50)")
+	@Column(columnDefinition = "nvarchar(50)", name = "last_name")
 	private String lastName;
 	
 	@Column(columnDefinition = "varchar(50)")
@@ -37,7 +39,7 @@ public class Account implements Serializable {
 	@Column(columnDefinition = "varchar(150)")
 	private String email;
 	
-	private String photo;
+	private String image;
 	
 	private Boolean activated = true;
 	

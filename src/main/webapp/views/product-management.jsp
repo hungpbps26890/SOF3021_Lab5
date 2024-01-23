@@ -80,7 +80,7 @@
 					            </div>
 					            
 					            <div class="mb-3">
-					              <label for="status" class="form-label">Status: </label>
+					              <label for="status" class="form-label">Available: </label>
 					              <form:radiobuttons
 					                class="form-check-input ms-3 me-2"
 					                path="available"
@@ -119,46 +119,10 @@
 					              <button class="btn btn-primary">Save</button>
 					              <button class="btn btn-warning" formaction="/admin/product/update">Update</button>
 					              <a class="btn btn-secondary" href="/admin/product">Cancel</a>
+					              <a class="btn btn-success" href="/admin/product/list">View List</a>
 					            </div>
 					          </form:form>
-					          <hr />
-					          <div class="row">
-					            <div class="col-lg-12">
-					              <table class="table table-bordered table-hover">
-					                <thead>
-					                  <tr>
-					                    <th>Product ID</th>
-					                    <th>Name</th>
-					                    <th>Price</th>
-					                    <th>Status</th>
-					                    <th>Category</th>
-					                    <th>Image</th>
-					                    <th>Action</th>
-					                  </tr>
-					                </thead>
-					                <tbody>
-					                  <c:forEach var="item" items="${products}">
-					                    <tr class="align-middle">
-					                      <td>${item.id}</td>
-					                      <td>${item.name}</td>
-					                      <td>${item.price}</td>
-					                      <td>${statuses.get(item.available)}</td>
-					                      <td>${item.category.name}</td>
-					                      <td><img alt="${item.image}" src="/images/${item.image}" style="width: 100px"></td>
-					                      <td class="text-center">
-					                        <a class="btn btn-warning" href="/admin/product/${item.id}">
-					                          Edit
-					                        </a>
-					                        <a class="btn btn-danger" href="/admin/product?btnDel=&id=${item.id}">
-					                          Delete
-					                        </a>
-					                      </td>
-					                    </tr>
-					                  </c:forEach>
-					                </tbody>
-					              </table>
-					            </div>
-					          </div>
+					         
 					        </div>
 				      	</div>
 					</div>

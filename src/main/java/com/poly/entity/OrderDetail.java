@@ -11,15 +11,17 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @SuppressWarnings("serial")
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 @Entity
-@Table(name = "OrderDetails", uniqueConstraints = { @UniqueConstraint(columnNames = { "Productid", "Orderid" }) })
+@Table(name = "order_details", uniqueConstraints = { @UniqueConstraint(columnNames = { "product_id", "order_id" }) })
 public class OrderDetail implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,11 +32,11 @@ public class OrderDetail implements Serializable {
 	private Integer quantity;
 
 	@ManyToOne
-	@JoinColumn(name = "Productid")
+	@JoinColumn(name = "product_id")
 	Product product;
 
 	@ManyToOne
-	@JoinColumn(name = "Orderid")
+	@JoinColumn(name = "order_id")
 	Order order;
 
 }

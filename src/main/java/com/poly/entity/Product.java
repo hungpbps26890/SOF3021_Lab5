@@ -19,15 +19,17 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @SuppressWarnings("serial")
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 @Entity
-@Table(name = "Products")
+@Table(name = "products")
 public class Product implements Serializable {
 	@Id
 	@NotNull(message = "{NotEmpty.product.id}")
@@ -43,14 +45,14 @@ public class Product implements Serializable {
 	private Double price;
 	
 	@Temporal(TemporalType.DATE)
-	@Column(name = "Createdate")
+	@Column(name = "create_date")
 	private Date createDate = new Date();
 	
 	@NotNull(message = "{NotNull.product.available}")
 	private Boolean available;
 	
 	@ManyToOne
-	@JoinColumn(name = "Categoryid")
+	@JoinColumn(name = "category_id")
 	Category category;
 	
 	@JsonIgnore
