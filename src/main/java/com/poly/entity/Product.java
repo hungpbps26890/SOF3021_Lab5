@@ -42,6 +42,7 @@ public class Product implements Serializable {
 	private String image;
 	
 	@Positive(message = "{Positive.product.price}")
+	@NotNull(message = "{NotEmpty.product.price}")
 	private Double price;
 	
 	@Temporal(TemporalType.DATE)

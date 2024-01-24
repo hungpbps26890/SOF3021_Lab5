@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,33 +41,49 @@
 								<h3>Profile</h3>
 							</div>
 							<div class="card-body">
-								<form action="${url}/profile" method="post">
+								<form:form action="${url}/profile" method="post" modelAttribute="account">
 									<div class="mb-3">
-										<label for="username" class="form-label">Username</label> <input
-											type="text" class="form-control" id="username" name="username" 
-											value="${currentUser.username}"
+										<label for="username" class="form-label">Username</label> 
+										<form:input
+											type="text" class="form-control" id="username" path="username" 
+											value="${account.username}"
 											/>
+										<div class="mt-2">
+							              	<form:errors path="username" class="badge text-bg-danger"></form:errors>
+							              </div>
 									</div>
 									
 									<div class="mb-3">
-										<label for="firstName" class="form-label">Firstname</label> <input
-											type="text" class="form-control" id="firstName" name="firstName"
-											value="${currentUser.firstName}"
+										<label for="firstName" class="form-label">Firstname</label> 
+										<form:input
+											type="text" class="form-control" id="firstName" path="firstName"
+											value="${account.firstName}"
 											/>
+										<div class="mt-2">
+							              	<form:errors path="firstName" class="badge text-bg-danger"></form:errors>
+							              </div>
 									</div>
 									
 									<div class="mb-3">
-										<label for="lastName" class="form-label">Lastname</label> <input
-											type="text" class="form-control" id="lastName" name="lastName"
-											value="${currentUser.lastName}"
+										<label for="lastName" class="form-label">Lastname</label> 
+										<form:input
+											type="text" class="form-control" id="lastName" path="lastName"
+											value="${account.lastName}"
 											/>
+										<div class="mt-2">
+							              	<form:errors path="lastName" class="badge text-bg-danger"></form:errors>
+							              </div>
 									</div>
 									
 									<div class="mb-3">
-										<label for="email" class="form-label">Email</label> <input
-											type="email" class="form-control" id="email" name="email"
-											value="${currentUser.email}"
+										<label for="email" class="form-label">Email</label> 
+										<form:input
+											type="text" class="form-control" id="email" path="email"
+											value="${account.email}"
 											/>
+										<div class="mt-2">
+						              	<form:errors path="email" class="badge text-bg-danger"></form:errors>
+						              </div>
 									</div>
 									
 									
@@ -75,7 +92,7 @@
 									</div>
 									<button type="submit" class="btn btn-primary">Update</button>
 									<button type="reset" class="btn btn-secondary">Cancel</button>
-								</form>
+								</form:form>
 							</div>
 						</div>
 					</div>
