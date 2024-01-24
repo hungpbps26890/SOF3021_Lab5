@@ -10,6 +10,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,9 +27,11 @@ public class Category implements Serializable {
 
 	@Id
 	@Column(columnDefinition = "char(5)")
+	@NotEmpty(message = "{NotEmpty.category.id}")
 	private String id;
 
 	@Column(columnDefinition = "nvarchar(255)")
+	@NotEmpty(message = "{NotEmpty.category.name}")
 	private String name;
 	
 	@JsonIgnore

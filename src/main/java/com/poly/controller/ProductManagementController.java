@@ -71,12 +71,11 @@ public class ProductManagementController {
 
 		model.addAttribute("products", products);
 
-
 		return "product-management-list";
 	}
 
 	@PostMapping("admin/product")
-	public String insert(@Valid @ModelAttribute("product") Product product, BindingResult result, Model model,
+	public String save(@Valid @ModelAttribute("product") Product product, BindingResult result, Model model,
 			@RequestPart("photo") MultipartFile multipartFile) throws IOException {
 
 		if (result.hasErrors() || multipartFile.isEmpty()) {

@@ -134,6 +134,7 @@ public class AccountController {
 			if (newPassword.equals(confirmedPassword)) {
 				Account updatedUser = accountDAO.findById(currentUser.getUsername()).get();
 				updatedUser.setPassword(newPassword);
+				
 				accountDAO.save(updatedUser);
 
 				sessionService.setAttribute("currentUser", updatedUser);
