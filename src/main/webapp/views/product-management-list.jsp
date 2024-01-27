@@ -45,10 +45,10 @@
 					          <form action="/admin/product/list/search" method="post">
 					          	<div class="row g-3 mb-3">
 								  <div class="col">
-								    <input type="text" class="form-control" placeholder="Min price" name="minPrice" value="${param.minPrice}">
+								    <input type="text" class="form-control" placeholder="Min price" name="minPrice" value="${minPrice}">
 								  </div>
 								  <div class="col">
-								    <input type="text" class="form-control" placeholder="Max price" name="maxPrice" value="${param.maxPrice}">
+								    <input type="text" class="form-control" placeholder="Max price" name="maxPrice" value="${maxPrice}">
 								  </div>
 								  <div class="col">
 								  	<button class="btn btn-primary">Search</button>
@@ -92,16 +92,16 @@
 					              </table>
 					              <nav aria-label="Page navigation example">
 									  <ul class="pagination d-flex justify-content-center">
-									  	<li class="page-item ${products.first ? 'disabled' : ''}"><a class="page-link" href="/admin/product/list?page=0">First</a></li>
-									    <li class="page-item ${products.first ? 'disabled' : ''}"><a class="page-link" href="/admin/product/list?page=${products.number - 1}">Previous</a></li>
+									  	<li class="page-item ${products.first ? 'disabled' : ''}"><a class="page-link" href="/admin/product/list/search?page=0">First</a></li>
+									    <li class="page-item ${products.first ? 'disabled' : ''}"><a class="page-link" href="/admin/product/list/search?page=${products.number - 1}">Previous</a></li>
 									    
 									    <c:forEach varStatus="i" begin="0" end="${products.totalPages - 1}">
-									    	<li class="page-item ${products.number == i.index ? 'active' : ''}"><a class="page-link" href="/admin/product/list?page=${i.index}">${i.index + 1}</a></li>
+									    	<li class="page-item ${products.number == i.index ? 'active' : ''}"><a class="page-link" href="/admin/product/list/search?page=${i.index}">${i.index + 1}</a></li>
 									    </c:forEach>
 									    
 									    
-									    <li class="page-item ${products.last ? 'disabled' : ''}"><a class="page-link" href="/admin/product/list?page=${products.number + 1}">Next</a></li>
-									    <li class="page-item ${products.last ? 'disabled' : ''}"><a class="page-link" href="/admin/product/list?page=${products.totalPages - 1}">Last</a></li>
+									    <li class="page-item ${products.last ? 'disabled' : ''}"><a class="page-link" href="/admin/product/list/search?page=${products.number + 1}">Next</a></li>
+									    <li class="page-item ${products.last ? 'disabled' : ''}"><a class="page-link" href="/admin/product/list/search?page=${products.totalPages - 1}">Last</a></li>
 									  </ul>
 									</nav>
 					            </div>

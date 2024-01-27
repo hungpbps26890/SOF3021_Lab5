@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,6 +28,7 @@ import com.poly.dao.CategoryDAO;
 import com.poly.dao.ProductDAO;
 import com.poly.entity.Category;
 import com.poly.entity.Product;
+import com.poly.utils.SessionService;
 import com.poly.utils.UploadService;
 
 import jakarta.validation.Valid;
@@ -42,6 +44,9 @@ public class ProductManagementController {
 
 	@Autowired
 	UploadService uploadService;
+	
+	@Autowired
+	SessionService sessionService;
 
 	@GetMapping("admin/product")
 	public String getProductManagement(Model model) {
@@ -69,6 +74,10 @@ public class ProductManagementController {
 		Page<Product> products = productDAO.findAll(pageable);
 
 		model.addAttribute("products", products);
+		
+
+		sessionService.setAttribute("minPrice", null);
+		sessionService.setAttribute("maxPrice", null);
 
 		return "product-management-list";
 	}
@@ -142,7 +151,7 @@ public class ProductManagementController {
 		return "redirect:/admin/product/list";
 	}
 	
-	@PostMapping("admin/product/list/search")
+	@RequestMapping("admin/product/list/search")
 	public String search(
 			Model model,
 			@RequestParam("minPrice") Optional<Double> minPrice,
@@ -151,6 +160,13 @@ public class ProductManagementController {
 			) {
 		
 		Pageable pageable = PageRequest.of(page.orElse(0), 4);
+		
+		Double min = minPrice.orElse(sessionService.getAttribute("minPrice"));
+		Double max = maxPrice.orElse(sessionService.getAttribute("maxPrice"));
+		
+		sessionService.setAttribute("minPrice", min);
+		sessionService.setAttribute("maxPrice", max);
+		
 		Page<Product> products = productDAO.findByPrice(minPrice.orElse(Double.MIN_VALUE), maxPrice.orElse(Double.MAX_VALUE), pageable);
 		model.addAttribute("products", products);
 		
