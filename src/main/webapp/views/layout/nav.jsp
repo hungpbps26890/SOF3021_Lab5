@@ -23,6 +23,8 @@
 						<i class="fa-solid fa-warehouse"></i> Product Management</a></li>
 						<li class="nav-item"><a class="nav-link" href="<c:url value='/admin/category'/>"><i
 						class="fa-solid fa-list"></i> Category Management</a></li>
+						<li class="nav-item"><a class="nav-link" href="<c:url value='/admin/report'/>"><i
+						class="fa-solid fa-chart-simple"></i> Report</a></li>
 					</c:when>
 					<c:otherwise>
 						<li class="nav-item"><a class="nav-link" href="#"><i

@@ -59,7 +59,6 @@ public class ProductManagementController {
 
 		model.addAttribute("products", products);
 
-
 		return "product-management-list";
 	}
 
@@ -141,6 +140,21 @@ public class ProductManagementController {
 		productDAO.deleteById(id);
 
 		return "redirect:/admin/product/list";
+	}
+	
+	@PostMapping("admin/product/list/search")
+	public String search(
+			Model model,
+			@RequestParam("minPrice") Optional<Double> minPrice,
+			@RequestParam("maxPrice") Optional<Double> maxPrice,
+			@RequestParam("page") Optional<Integer> page
+			) {
+		
+		Pageable pageable = PageRequest.of(page.orElse(0), 4);
+		Page<Product> products = productDAO.findByPrice(minPrice.orElse(Double.MIN_VALUE), maxPrice.orElse(Double.MAX_VALUE), pageable);
+		model.addAttribute("products", products);
+		
+		return "product-management-list";
 	}
 
 	@ModelAttribute("statuses")

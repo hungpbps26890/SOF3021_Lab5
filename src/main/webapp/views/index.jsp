@@ -50,16 +50,16 @@
 				</div>
 				<nav aria-label="Page navigation example">
 				  <ul class="pagination d-flex justify-content-center">
-				  	<li class="page-item ${products.first ? 'disabled' : ''}"><a class="page-link" href="/home?page=0">First</a></li>
-				    <li class="page-item ${products.first ? 'disabled' : ''}"><a class="page-link" href="/home?page=${products.number - 1}">Previous</a></li>
+				  	<li class="page-item ${products.first ? 'disabled' : ''}"><a class="page-link" href="/home/search-by-keyword?page=0">First</a></li>
+				    <li class="page-item ${products.first ? 'disabled' : ''}"><a class="page-link" href="/home/search-by-keyword?page=${products.number - 1}">Previous</a></li>
 				    
 				    <c:forEach varStatus="i" begin="0" end="${products.totalPages - 1}">
-				    	<li class="page-item ${products.number == i.index ? 'active' : ''}"><a class="page-link" href="/home?page=${i.index}">${i.index + 1}</a></li>
+				    	<li class="page-item ${products.number == i.index ? 'active' : ''}"><a class="page-link" href="/home/search-by-keyword?page=${i.index}">${i.index + 1}</a></li>
 				    </c:forEach>
 				    
 				    
-				    <li class="page-item ${products.last ? 'disabled' : ''}"><a class="page-link" href="/home?page=${products.number + 1}">Next</a></li>
-				    <li class="page-item ${products.last ? 'disabled' : ''}"><a class="page-link" href="/ahome?page=${products.totalPages - 1}">Last</a></li>
+				    <li class="page-item ${products.last ? 'disabled' : ''}"><a class="page-link" href="/home/search-by-keyword?page=${products.number + 1}">Next</a></li>
+				    <li class="page-item ${products.last ? 'disabled' : ''}"><a class="page-link" href="/home/search-by-keyword?page=${products.totalPages - 1}">Last</a></li>
 				  </ul>
 				</nav>
 			</article>

@@ -42,7 +42,19 @@
 					        </div>
 					        <div class="card-body">
 					        	<c:url var="url" value="/admin"/>
-					          
+					          <form action="/admin/product/list/search" method="post">
+					          	<div class="row g-3 mb-3">
+								  <div class="col">
+								    <input type="text" class="form-control" placeholder="Min price" name="minPrice" value="${param.minPrice}">
+								  </div>
+								  <div class="col">
+								    <input type="text" class="form-control" placeholder="Max price" name="maxPrice" value="${param.maxPrice}">
+								  </div>
+								  <div class="col">
+								  	<button class="btn btn-primary">Search</button>
+								  </div>
+								</div>
+					          </form>
 					          <div class="row">
 					            <div class="col-lg-12">
 					              <table class="table table-bordered table-hover">
