@@ -42,7 +42,7 @@
 									<h5 class="card-text text-danger"><i class="fa-solid fa-dollar-sign"></i> ${item.price }</h5>
 									<h5 class="card-title">${item.name }</h5>
 						
-									<a href="/product/detail/${item.id}" class="btn btn-primary">Buy now</a>
+									<a href="/product/detail/${item.id}" class="btn btn-primary"><s:message code="home.buy"/></a>
 								</div>
 							</div>
 						</div>
@@ -50,16 +50,16 @@
 				</div>
 				<nav aria-label="Page navigation example">
 				  <ul class="pagination d-flex justify-content-center">
-				  	<li class="page-item ${products.first ? 'disabled' : ''}"><a class="page-link" href="/home/search-by-keyword?page=0">First</a></li>
-				    <li class="page-item ${products.first ? 'disabled' : ''}"><a class="page-link" href="/home/search-by-keyword?page=${products.number - 1}">Previous</a></li>
+				  	<li class="page-item ${products.first ? 'disabled' : ''}"><a class="page-link" href="/home/search-by-keyword?page=0"><s:message code="page.first"/></a></li>
+				    <li class="page-item ${products.first ? 'disabled' : ''}"><a class="page-link" href="/home/search-by-keyword?page=${products.number - 1}"><s:message code="page.previous"/></a></li>
 				    
 				    <c:forEach varStatus="i" begin="0" end="${products.totalPages - 1}">
 				    	<li class="page-item ${products.number == i.index ? 'active' : ''}"><a class="page-link" href="/home/search-by-keyword?page=${i.index}">${i.index + 1}</a></li>
 				    </c:forEach>
 				    
 				    
-				    <li class="page-item ${products.last ? 'disabled' : ''}"><a class="page-link" href="/home/search-by-keyword?page=${products.number + 1}">Next</a></li>
-				    <li class="page-item ${products.last ? 'disabled' : ''}"><a class="page-link" href="/home/search-by-keyword?page=${products.totalPages - 1}">Last</a></li>
+				    <li class="page-item ${products.last ? 'disabled' : ''}"><a class="page-link" href="/home/search-by-keyword?page=${products.number + 1}"><s:message code="page.next"/></a></li>
+				    <li class="page-item ${products.last ? 'disabled' : ''}"><a class="page-link" href="/home/search-by-keyword?page=${products.totalPages - 1}"><s:message code="page.last"/></a></li>
 				  </ul>
 				</nav>
 			</article>

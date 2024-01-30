@@ -13,7 +13,7 @@
 
 	<div class="card">
 		<div class="card-header">
-			<strong><i class="fa-solid fa-list-ul"></i> Category</strong>
+			<strong><i class="fa-solid fa-list-ul"></i> <s:message code="cate.category"/></strong>
 		</div>
 		<div class="list-group list-group-flush">
 			<c:forEach var="category" items="${categories}">
