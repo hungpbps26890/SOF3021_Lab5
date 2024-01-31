@@ -32,7 +32,7 @@
 						class="fa-solid fa-list"></i> <s:message code="nav.about"/></a></li>
 						<li class="nav-item"><a class="nav-link" href="#"><i
 								class="fa-solid fa-phone"></i> <s:message code="nav.contact"/></a></li>
-						<li class="nav-item"><a class="nav-link" href="#"> <i
+						<li class="nav-item"><a class="nav-link" href="/mailer"> <i
 								class="fa-solid fa-envelope"></i> <s:message code="nav.feedback"/>
 						</a></li>
 						<li class="nav-item"><a class="nav-link" href="#"> <i

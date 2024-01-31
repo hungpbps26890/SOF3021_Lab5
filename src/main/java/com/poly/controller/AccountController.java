@@ -58,22 +58,34 @@ public class AccountController {
 			String password = account.getPassword();
 			boolean remember = paramService.getBoolean("remember", false);
 
-			Account user = accountDAO.findById(username).get();
+			try {
+				Account user = accountDAO.findById(username).get();
 
-			if (user != null && user.getPassword().equals(password)) {
-				if (remember == true) {
-					cookieService.create("cookieUsername", username, 10);
-					cookieService.create("cookiePassword", password, 10);
+				if (user != null && user.getPassword().equals(password)) {
+					if (remember == true) {
+						cookieService.create("cookieUsername", username, 10);
+						cookieService.create("cookiePassword", password, 10);
+					} else {
+						cookieService.remove("cookieUsername");
+						cookieService.remove("cookiePassword");
+					}
+
+					sessionService.setAttribute("currentUser", user);
+
+					String uri = sessionService.getAttribute("security-uri");
+
+					if (uri != null && !uri.equals("/account/logout")) {
+						return "redirect:" + uri;
+					}
+
+					return "redirect:/home";
 				} else {
-					cookieService.remove("cookieUsername");
-					cookieService.remove("cookiePassword");
+					throw new Exception();
 				}
-
-				sessionService.setAttribute("currentUser", user);
-				return "redirect:/home";
-			} else {
+			} catch (Exception e) {
 				model.addAttribute("message", "Username or password is invalid!");
 			}
+
 		}
 
 		return "login";
@@ -134,7 +146,7 @@ public class AccountController {
 			if (newPassword.equals(confirmedPassword)) {
 				Account updatedUser = accountDAO.findById(currentUser.getUsername()).get();
 				updatedUser.setPassword(newPassword);
-				
+
 				accountDAO.save(updatedUser);
 
 				sessionService.setAttribute("currentUser", updatedUser);

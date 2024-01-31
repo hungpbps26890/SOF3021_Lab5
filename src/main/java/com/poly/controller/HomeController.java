@@ -36,6 +36,7 @@ public class HomeController {
 	public String getIndex() {
 		
 		sessionService.setAttribute("keyword", "");
+		sessionService.setAttribute("security-uri", null);
 		
 		return "index";
 	}

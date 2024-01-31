@@ -29,6 +29,7 @@ public class I18NConfig implements WebMvcConfigurer {
 		registry.addInterceptor(locale).addPathPatterns("/**");
 	}
 
+	@SuppressWarnings("deprecation")
 	@Bean("localeResolver")
 	public LocaleResolver getLocaleResolver() {
 		CookieLocaleResolver resolver = new CookieLocaleResolver();

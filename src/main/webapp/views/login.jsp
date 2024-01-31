@@ -82,6 +82,9 @@
 									<div class="mb-3">
 										<span class="text-danger">${message}</span>
 									</div>
+									<div class="mb-3">
+										<span class="text-danger">${param.error}</span>
+									</div>
 									<button type="submit" class="btn btn-primary">Login</button>
 									<button type="reset" class="btn btn-secondary">Cancel</button>
 								</form:form>
